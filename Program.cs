@@ -26,7 +26,7 @@ namespace DSPC.ConsumerProducer
                 foreach (var p in producers) p.StopProduce();
 
                 Console.WriteLine("Finishing log writes...");
-            } // тут викликається Logger.Dispose()
+            } 
         }
     }
 }
