@@ -29,17 +29,17 @@ namespace DSPC.ConsumerProducer
         public void LogMessage(string logLevel, string message)
         {
             var logMessage = FormatMessage(DateTime.Now, logLevel, message);
-            // Додаємо в чергу, не чекаючи запису
+            
             _queue.Add(logMessage);
         }
 
         private void Consume()
         {
-            // GetConsumingEnumerable() чекає, доки CompleteAdding не буде викликаний
+           
             foreach (var logMessage in _queue.GetConsumingEnumerable())
             {
                 _output.WriteLine(logMessage);
-                // за потреби можна Flush() кожні N записів або за таймером
+                
             }
         }
 
@@ -58,12 +58,12 @@ namespace DSPC.ConsumerProducer
             if (_disposed) return;
             _disposed = true;
 
-            // Скажемо споживачу, що більше не буде нових повідомлень
+           
             _queue.CompleteAdding();
-            // Дочекаємось, доки всі повідомлення будуть оброблені
+            
             _consumerThread.Join();
 
-            // Фінальний Flush і закриття потоку
+            
             _output.Flush();
             _output.Dispose();
             _queue.Dispose();
